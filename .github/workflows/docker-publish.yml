@@ -43,3 +43,15 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      
+      - name: Update docker-compose.yml with new image tag
+        run: |
+          sed -i "s|image:  ttimbers/dsci522-dockerfile-practice-tt:.*|image:  ttimbers/dsci522-dockerfile-practice-tt:${{ steps.meta.outputs.sha }}|" docker-compose.yml
+
+      - name: Commit and push updated docker-compose.yml
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docker-compose.yml
+          git commit -m "Update docker-compose.yml with new image tag"
+          git push
