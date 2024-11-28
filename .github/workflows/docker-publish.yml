@@ -43,6 +43,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Debug metadata outputs
+        run: |
+          echo "Tags:"
+          echo "${{ steps.meta.outputs.tags }}"
+          echo "${{ steps.meta.outputs.sha }}"
       
       - name: Update docker-compose.yml with new image tag
         run: |
