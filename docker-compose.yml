@@ -1,7 +1,7 @@
 services:
   # run jupyter notebook inside jupyter 
   jupyter-notebook:
-    image:  ttimbers/dsci522-dockerfile-practice-tt:234324
+    image:  ttimbers/dsci522-dockerfile-practice-tt:eaed841
     ports:
       - "8888:8888"
     volumes:
