@@ -49,10 +49,17 @@ jobs:
           echo "Tags:"
           echo "${{ steps.meta.outputs.tags }}"
           echo "${{ steps.meta.outputs.sha }}"
+
+      - name: Extract SHA from tags
+        id: extract_sha
+        run: |
+          echo "sha=$(echo '${{ steps.meta.outputs.tags }}' | grep -oP '(?<=:)[0-9a-f]{7,}' | head -n 1)" >> $GITHUB_ENV
       
       - name: Update docker-compose.yml with new image tag
         run: |
-          sed -i "s|image:  ttimbers/dsci522-dockerfile-practice-tt:.*|image:  ttimbers/dsci522-dockerfile-practice-tt:${{ steps.meta.outputs.sha }}|" docker-compose.yml
+          sed -i "s|image:  ttimbers/dsci522-dockerfile-practice-tt:.*|image:  ttimbers/dsci522-dockerfile-practice-tt:${sha}|" docker-compose.yml
+        env:
+          sha: ${{ env.sha }}
 
       - name: Commit and push updated docker-compose.yml
         run: |
