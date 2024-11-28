@@ -44,11 +44,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Debug metadata outputs
-        run: |
-          echo "Tags:"
-          echo "${{ steps.meta.outputs.version }}"
-
       - name: Update docker-compose.yml with new image tag
         run: |
           sed -i "s|image:  ttimbers/dsci522-dockerfile-practice-tt:.*|image:  ttimbers/dsci522-dockerfile-practice-tt:${{ steps.meta.outputs.version }}|" docker-compose.yml
